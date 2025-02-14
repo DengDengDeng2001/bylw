@@ -28,6 +28,7 @@ type Config struct {
 }
 
 // Reloader ...
+// 管理多个 Manager，周期性地更新规则，删除无效的 Manager，并根据网关返回的数据动态加载规则。
 type Reloader struct {
 	config   Config
 	managers []*Manager

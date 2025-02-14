@@ -24,6 +24,7 @@ import (
 )
 
 // Manager ...
+// 用于管理单个 Prometheus 实例的规则，支持规则的更新、通知发送等功能。
 type Manager struct {
 	Config  Config
 	Prom    Prom
@@ -93,7 +94,7 @@ func (m *Manager) Update(rules Rules) error {
 		level.Error(m.logger).Log("msg", "write file error", "error", err, "prom_id", m.Prom.ID)
 		return err
 	}
-
+	// 每 x 分钟，系统会自动重新评估所有报警规则，看看当前数据是否触发报警条件
 	return m.Manager.Update(time.Duration(m.Config.EvaluationInterval), []string{filepath}, nil)
 }
 
